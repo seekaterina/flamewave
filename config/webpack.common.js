@@ -49,6 +49,10 @@ module.exports = {
         generator: {
           filename: 'fonts/[hash][ext][query]'
         }
+      },
+      {
+        test: /\.(wav|mp3)$/i,
+        type: 'asset/resource',
       }
     ]
   },

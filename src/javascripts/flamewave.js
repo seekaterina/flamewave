@@ -205,13 +205,15 @@ function initTransport() {
   transport.start()
 }
 
+import kick from './roland_tr_909/BT7A0D0.WAV'
+import snare from './roland_tr_909/ST0T3S7.WAV'
+
 function initDrum() {
   const sampler = new Tone.Sampler({
     urls: {
-      C2: 'BT7A0D0.WAV',
-      D2: 'ST0T3S7.WAV'
+      C2: kick,
+      D2: snare
     },
-    baseUrl: 'roland_tr_909/'
   }).toDestination()
 
   const freeverbNode = new Tone.Freeverb(drumsFreeverbSettings).toDestination()
