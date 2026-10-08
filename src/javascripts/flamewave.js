@@ -280,11 +280,14 @@ function initBassSynth() {
 document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('startButton')
 
-  startButton.addEventListener('click', () => {
+  startButton.addEventListener('click', async () => {
+
+    await Tone.start()
     initWebAudio()
-    initTransport()
     initDrum()
     initEchoDrum()
     initBassSynth()
+    await Tone.loaded()
+    initTransport()
   })
 })
