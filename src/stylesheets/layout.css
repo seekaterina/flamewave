@@ -14,6 +14,10 @@ body{
   justify-content: center;
 }
 
+.space{
+  height: 35px;
+}
+
 .button {
   background-color: #FFF7C5;
   width: 180px;
@@ -41,6 +45,16 @@ body{
 
 .button:hover {
   background-color: #c5bd87;
+  /* filter: brightness(10%); */
+}
+
+.button.b-light-or:hover {
+  background-color: #c49466;
+  /* filter: brightness(10%); */
+}
+
+.button.b-orange:hover {
+  background-color: #d4761e;
   /* filter: brightness(10%); */
 }
 
@@ -91,4 +105,28 @@ body{
   color: #fff7c5;
   font-size: 25px;
   margin-bottom: 30px;
+}
+
+.volume-slider.b-light-or::-webkit-slider-thumb {
+  background: #FFBE82;
+}
+
+.volume-slider.b-light-or::-webkit-slider-runnable-track {
+  background: #c49466;
+}
+
+.b-light-or{
+  background-color: #FFBE82;
+}
+
+.b-orange{
+  background-color: #FF8E24;
+}
+
+.light-or{
+  color: #FFBE82;
+}
+
+.orange{
+  color: #FF8E24;
 }
