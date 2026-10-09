@@ -8,18 +8,26 @@ body{
   margin-top: 40px;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #3D1800;
+  counter-reset: #fff7c5;
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
 }
 
 .button {
-  background-color: #74a370;
-  width: 100px;
-  padding: 10px;
+  background-color: #FFF7C5;
+  width: 180px;
+  padding: 12px 60px;
   text-align: center;
   cursor: pointer;
   margin-bottom: 40px;
+  border: 0;
+  font-size: 24px;
+  color: #3D1800;
+  margin: 0 auto;
 }
 
-.Button {
+/* .Button {
   width: fit-content;
   padding: 8px 10px;
   font-size: 14px;
@@ -29,9 +37,58 @@ body{
   color: var(--black);
   cursor: pointer;
   user-select: none;
+} */
+
+.button:hover {
+  background-color: #c5bd87;
+  /* filter: brightness(10%); */
 }
 
-.Button:hover {
-  background-color: var(--white);
-  filter: brightness(90%);
+.volume-slider {
+  color: #FFF7C5;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 450px;
+  height: 20px;
+  
+  cursor: grab;
+}
+
+/* --- Дорожка --- */
+.volume-slider::-webkit-slider-runnable-track {
+  height: 20px;
+  background: #c5bd87;
+}
+/* .volume-slider::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #3a3a3a;
+} */
+
+/* --- Бегунок --- */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 35px;
+  height: 85px;
+  margin-top: -32px; /* (высота дорожки - высота бегунка) / 2 */
+  background: #FFF7C5;
+}
+/* .volume-slider::-moz-range-thumb {
+  width: 16px;  /* в Firefox border входит в размер отдельно */
+  /* height: 16px;
+  border-radius: 50%;
+  background: #ff5a36;
+  border: 2px solid #fff;
+} */
+
+/* --- Состояния --- */
+/* .volume-slider:hover::-webkit-slider-thumb { background: #ff7a5c; }
+.volume-slider:active::-webkit-slider-thumb { transform: scale(1.15); }
+.volume-slider:focus-visible { outline: 2px solid #ff5a36; outline-offset: 4px; } */
+
+.value-text{
+  color: #fff7c5;
+  font-size: 25px;
+  margin-bottom: 30px;
 }

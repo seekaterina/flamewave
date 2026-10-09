@@ -1,67 +1,65 @@
-console.log('flamewave')
+// // Создаём аудио-контекст для воспроизведения звука
+// const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 
-// Создаём аудио-контекст для воспроизведения звука
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+// // Создаём осциллятор внутри аудио-контекста
+// const oscillator = audioCtx.createOscillator()
 
-// Создаём осциллятор внутри аудио-контекста
-const oscillator = audioCtx.createOscillator()
+// function createButton() {
+//   const button = document.createElement('div')
+//   button.innerText = 'Start'
+//   button.classList.add('button')
+//   document.body.appendChild(button)
 
-function createButton() {
-  const button = document.createElement('div')
-  button.innerText = 'Start'
-  button.classList.add('button')
-  document.body.appendChild(button)
+//   button.addEventListener('click', () => {
+//     createOscillator()
+//   })
+// }
 
-  button.addEventListener('click', () => {
-    createOscillator()
-  })
-}
+// function createSlider() {
+//   const frequency = 440
 
-function createSlider() {
-  const frequency = 440
+//   const valueElement = document.createElement('div')
+//   valueElement.innerText = frequency
+//   document.body.appendChild(valueElement)
 
-  const valueElement = document.createElement('div')
-  valueElement.innerText = frequency
-  document.body.appendChild(valueElement)
+//   const slider = document.createElement('input')
+//   slider.type = 'range'
+//   slider.min = 0
+//   slider.max = 1000
+//   slider.step = 1
+//   slider.value = frequency
+//   document.body.appendChild(slider)
 
-  const slider = document.createElement('input')
-  slider.type = 'range'
-  slider.min = 0
-  slider.max = 1000
-  slider.step = 1
-  slider.value = frequency
-  document.body.appendChild(slider)
+//   slider.addEventListener('input', (event) => {
+//     // console.log('input', event.target.value)
 
-  slider.addEventListener('input', (event) => {
-    // console.log('input', event.target.value)
+//     valueElement.innerText = event.target.value
 
-    valueElement.innerText = event.target.value
+//     oscillator.frequency.setValueAtTime(
+//       event.target.value,
+//       audioCtx.currentTime
+//     )
+//   })
+// }
 
-    oscillator.frequency.setValueAtTime(
-      event.target.value,
-      audioCtx.currentTime
-    )
-  })
-}
+// function createOscillator() {
+//   // Задаём осциллятору тип волны
+//   oscillator.type = 'square'
 
-function createOscillator() {
-  // Задаём осциллятору тип волны
-  oscillator.type = 'square'
+//   // Задаём осциллятору частоту в герцах
+//   oscillator.frequency.setValueAtTime(440, audioCtx.currentTime)
 
-  // Задаём осциллятору частоту в герцах
-  oscillator.frequency.setValueAtTime(440, audioCtx.currentTime)
+//   // Подключаем осциллятор к выводу звука (нашим колонкам)
+//   oscillator.connect(audioCtx.destination)
 
-  // Подключаем осциллятор к выводу звука (нашим колонкам)
-  oscillator.connect(audioCtx.destination)
+//   // Запускаем осциллятор
+//   oscillator.start()
+// }
 
-  // Запускаем осциллятор
-  oscillator.start()
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  createButton()
-  createSlider()
-})
+// document.addEventListener('DOMContentLoaded', () => {
+//   createButton()
+//   createSlider()
+// })
 
 
 
@@ -149,11 +147,11 @@ const drumSamplerSequence = [
     time: '0:0:0',
     noteName: 'C2',
     duration: '2n',
-    velocity: 1
+    velocity: 2
   },
   {
     time: '0:1:0',
-    noteName: 'D2',
+    noteName: 'C2',
     duration: '2n',
     velocity: 1
   },
@@ -173,11 +171,11 @@ const drumSamplerSequence = [
     time: '1:0:0',
     noteName: 'C2',
     duration: '2n',
-    velocity: 1
+    velocity: 2
   },
   {
     time: '1:1:0',
-    noteName: 'D2',
+    noteName: 'C2',
     duration: '2n',
     velocity: 1
   },
@@ -214,7 +212,7 @@ function initDrum() {
       C2: kick,
       D2: snare
     },
-  }).toDestination()
+  })
 
   const freeverbNode = new Tone.Freeverb(drumsFreeverbSettings).toDestination()
   sampler.connect(freeverbNode)
@@ -230,65 +228,90 @@ function initDrum() {
 
   part.loopEnd = '2m'
   part.loop = true
+  
+  const volume = 0.8
+
+   const valueElement = document.createElement('div')
+   valueElement.innerText = volume
+   valueElement.className = 'value-text'
+   document.body.appendChild(valueElement)
+
+   const slider = document.createElement('input')
+   slider.type = 'range'
+   slider.className = 'volume-slider'
+   slider.min = 0
+   slider.max = 1
+   slider.step = 0.01
+   slider.value = volume
+   document.body.appendChild(slider)
+
+   slider.addEventListener('input', (event) => {
+    const value = Number(event.target.value)
+
+     valueElement.innerText = value
+
+     sampler.volume.value = value === 0 ? - Infinity : Tone.gainToDb(value)
+   })
 }
 
-function initEchoDrum() {
-  const sampler = new Tone.Sampler({
-    urls: {
-      C2: 'HHOD6.WAV'
-    },
-    baseUrl: 'roland_tr_909/'
-  }).toDestination()
+// import hinat from './roland_tr_909/HHOD6.WAV'
 
-  const pingPongDelayNode = new Tone.PingPongDelay(
-    echoDrumFeedbackDelaySettings
-  ).toDestination()
+// function initEchoDrum() {
+//   const sampler = new Tone.Sampler({
+//     urls: {
+//       C2: hinat
+//     },
+//   }).toDestination()
 
-  const freeverbNode = new Tone.Freeverb(
-    echoDrumFreeverbSettings
-  ).toDestination()
+//   const pingPongDelayNode = new Tone.PingPongDelay(
+//     echoDrumFeedbackDelaySettings
+//   ).toDestination()
 
-  sampler.chain(pingPongDelayNode, freeverbNode)
+//   const freeverbNode = new Tone.Freeverb(
+//     echoDrumFreeverbSettings
+//   ).toDestination()
 
-  const part = new Tone.Part((time, note) => {
-    sampler.triggerAttackRelease(
-      note.noteName,
-      note.duration,
-      time,
-      note.velocity
-    )
-  }, echoDrumSamplerSequence).start(0)
+//   sampler.chain(pingPongDelayNode, freeverbNode)
 
-  part.loopEnd = '2m'
-  part.loop = true
-}
+//   const part = new Tone.Part((time, note) => {
+//     sampler.triggerAttackRelease(
+//       note.noteName,
+//       note.duration,
+//       time,
+//       note.velocity
+//     )
+//   }, echoDrumSamplerSequence).start(0)
 
-function initBassSynth() {
-  const synthNode = new Tone.PolySynth(bassSynthSettings).toDestination()
+//   part.loopEnd = '2m'
+//   part.loop = true
+// }
 
-  const part = new Tone.Part((time, note) => {
-    synthNode.triggerAttackRelease(
-      note.noteName,
-      note.duration,
-      time,
-      note.velocity
-    )
-  }, bassSynthSequence).start(0)
+// function initBassSynth() {
+//   const synthNode = new Tone.PolySynth(bassSynthSettings).toDestination()
 
-  part.loopEnd = '2m'
-  part.loop = true
-}
+//   const part = new Tone.Part((time, note) => {
+//     synthNode.triggerAttackRelease(
+//       note.noteName,
+//       note.duration,
+//       time,
+//       note.velocity
+//     )
+//   }, bassSynthSequence).start(0)
+
+//   part.loopEnd = '2m'
+//   part.loop = true
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const startButton = document.getElementById('startButton')
+  const start_button = document.getElementById('start-button')
 
-  startButton.addEventListener('click', async () => {
+  start_button.addEventListener('click', async () => {
 
     await Tone.start()
     initWebAudio()
     initDrum()
-    initEchoDrum()
-    initBassSynth()
+    //initEchoDrum()
+    //initBassSynth()
     await Tone.loaded()
     initTransport()
   })
