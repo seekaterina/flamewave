@@ -452,3 +452,235 @@ document.addEventListener('DOMContentLoaded', () => {
     initTransport()
   })
 })
+
+
+
+
+
+const opSamplerSequence = [
+  {
+    time: '0:0:0',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:0:1',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:0:2',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:0:3',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:1:0',
+    noteName: 'C2',
+    duration: '2n',
+    velocity: 1
+  },
+  {
+    time: '0:1:2',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:2:0',
+    noteName: 'C2',
+    duration: '2n',
+    velocity: 1
+  },
+
+
+  {
+    time: '0:2:1',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:2:2',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:2:3',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:3:0',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '0:3:1',
+    noteName: 'C2',
+    duration: '2n',
+    velocity: 1
+  },
+  {
+    time: '0:3:3',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  
+  {
+    time: '1:0:0',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:0:1',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:0:2',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:0:3',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:1:0',
+    noteName: 'C2',
+    duration: '2n',
+    velocity: 1
+  },
+  {
+    time: '1:1:2',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:2:0',
+    noteName: 'C2',
+    duration: '2n',
+    velocity: 1
+  },
+
+
+  {
+    time: '1:2:1',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:2:2',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:2:3',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:3:0',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+  {
+    time: '1:3:1',
+    noteName: 'C2',
+    duration: '2n',
+    velocity: 1
+  },
+  {
+    time: '1:3:3',
+    noteName: 'D2',
+    duration: '2n',
+    velocity: 0.1
+  },
+]
+
+import op from './roland_tr_909/OPCL4.WAV'
+import hh from './roland_tr_909/HHOD0.WAV'
+
+function initOp() {
+  const sampler = new Tone.Sampler({
+    urls: {
+      C2: op,
+      D2: hh
+    },
+  })
+
+  const freeverbNode = new Tone.Freeverb(drumsFreeverbSettings).toDestination()
+  sampler.connect(freeverbNode)
+
+  const part = new Tone.Part((time, note) => {
+    sampler.triggerAttackRelease(
+      note.noteName,
+      note.duration,
+      time,
+      note.velocity
+    )
+  }, opSamplerSequence).start(0)
+
+  part.loopEnd = '2m'
+  part.loop = true
+  
+  const volume = 0.8
+
+   const valueElement = document.createElement('div')
+   valueElement.innerText = volume
+   valueElement.className = 'value-text orange'
+   document.body.appendChild(valueElement)
+
+   const slider = document.createElement('input')
+   slider.type = 'range'
+   slider.className = 'volume-slider b-orange'
+   slider.min = 0
+   slider.max = 1
+   slider.step = 0.01
+   slider.value = volume
+   document.body.appendChild(slider)
+
+   slider.addEventListener('input', (event) => {
+    const value = Number(event.target.value)
+
+     valueElement.innerText = value
+
+     sampler.volume.value = value === 0 ? - Infinity : Tone.gainToDb(value)
+   })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const start_button = document.getElementById('end-button')
+
+  start_button.addEventListener('click', async () => {
+
+    await Tone.start()
+    initWebAudio()
+    initOp()
+    await Tone.loaded()
+    initTransport()
+  })
+})

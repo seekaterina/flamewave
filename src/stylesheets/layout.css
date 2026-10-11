@@ -115,6 +115,14 @@ body{
   background: #c49466;
 }
 
+.volume-slider.b-orange::-webkit-slider-thumb {
+  background: #FF8E24;
+}
+
+.volume-slider.b-orange::-webkit-slider-runnable-track {
+  background: #d4761e;
+}
+
 .b-light-or{
   background-color: #FFBE82;
 }
