@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flamewave</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://unpkg.com/tone@15.1.22/build/Tone.js" crossorigin="anonymous" defer></script>
+    <script src="javascript/script.js" defer></script>
+</head>
+<body>
+    <main class="stage" id="stage">
+
+        <section class="track">
+            <button class="button" id="start-button" type="button" aria-pressed="false">старт</button>
+            <div class="slider-box" style="--left: 374px; --width: 453px">
+                <input class="volume-slider" id="slider-1" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Громкость дорожки 1">
+                <output class="value-text" id="value-1" for="slider-1">0.80</output>
+            </div>
+        </section>
+
+        <section class="track">
+            <button class="button b-light-or" id="middle-button" type="button" aria-pressed="false">старт</button>
+            <div class="slider-box b-light-or" style="--left: 250px; --width: 701px">
+                <input class="volume-slider b-light-or" id="slider-2" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Громкость дорожки 2">
+                <output class="value-text light-or" id="value-2" for="slider-2">0.80</output>
+            </div>
+        </section>
+
+        <section class="track">
+            <button class="button b-orange" id="end-button" type="button" aria-pressed="false">старт</button>
+            <div class="slider-box b-orange" style="--left: 372px; --width: 455px">
+                <input class="volume-slider b-orange" id="slider-3" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Громкость дорожки 3">
+                <output class="value-text orange" id="value-3" for="slider-3">0.80</output>
+            </div>
+        </section>
+
+        <button class="pad pad-top" id="pad-1" type="button" aria-label="Хлопок"></button>
+        <button class="pad pad-bottom" id="pad-2" type="button" aria-label="Крэш"></button>
+
+    </main>
+</body>
+</html>

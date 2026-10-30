@@ -1,0 +1,225 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #3D1800;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Макет рисуется в «холсте» 1200 × 750 и масштабируется под окно (см. fitStage в script.js) */
+.stage {
+  --scale: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1200px;
+  height: 750px;
+  transform: translate(-50%, -50%) scale(var(--scale));
+}
+
+/* ---------- Дорожка: кнопка + ползунок ---------- */
+
+.track {
+  position: absolute;
+  left: 0;
+  width: 1200px;
+  height: 162px;
+}
+
+.track:nth-of-type(1) { top: 98px; }
+.track:nth-of-type(2) { top: 294px; }
+.track:nth-of-type(3) { top: 490px; }
+
+.button {
+  position: absolute;
+  left: 510px;
+  top: 0;
+  width: 181px;
+  height: 51px;
+  padding: 0;
+  border: 0;
+  background-color: #FFF7C5;
+  color: #3D1800;
+  font-family: inherit;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button.b-light-or {
+  background-color: #FFBE82;
+}
+
+.button.b-orange {
+  background-color: #FF8E24;
+}
+
+.button:hover {
+  background-color: #c5bd87;
+}
+
+.button.b-light-or:hover {
+  background-color: #c49466;
+}
+
+.button.b-orange:hover {
+  background-color: #d4761e;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+/* ---------- Ползунок громкости ---------- */
+
+.slider-box {
+  --color: #FFF7C5;
+  position: absolute;
+  left: var(--left);
+  top: 109px;
+  width: var(--width);
+  height: 20px;
+}
+
+.slider-box.b-light-or { --color: #FFBE82; }
+.slider-box.b-orange { --color: #FF8E24; }
+
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  background: transparent;
+  cursor: grab;
+}
+
+.volume-slider:active {
+  cursor: grabbing;
+}
+
+.volume-slider:focus {
+  outline: none;
+}
+
+.volume-slider:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.volume-slider:focus-visible::-moz-range-thumb {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* --- Дорожка --- */
+.volume-slider::-webkit-slider-runnable-track {
+  height: 20px;
+  background: var(--color);
+  border: 0;
+}
+
+.volume-slider::-moz-range-track {
+  height: 20px;
+  background: var(--color);
+  border: 0;
+}
+
+/* --- Бегунок --- */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 36px;
+  height: 85px;
+  margin-top: -32.5px; /* (высота дорожки - высота бегунка) / 2 */
+  background: var(--color);
+  border: 0;
+  border-radius: 0;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 36px;
+  height: 85px;
+  background: var(--color);
+  border: 0;
+  border-radius: 0;
+}
+
+/* Число громкости — справа от дорожки */
+.value-text {
+  position: absolute;
+  left: calc(100% + 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff7c5;
+  font-size: 25px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.light-or {
+  color: #FFBE82;
+}
+
+.orange {
+  color: #FF8E24;
+}
+
+/* ---------- Круги-кнопки ---------- */
+
+.pad {
+  position: absolute;
+  width: 182px;
+  height: 182px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--outer);
+}
+
+.pad::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 129px;
+  height: 129px;
+  margin: -64.5px 0 0 -64.5px;
+  border-radius: 50%;
+  background: var(--inner);
+}
+
+.pad-top {
+  --outer: #FFBE82;
+  --inner: #FFF7C5;
+  left: 951px;
+  top: 59px;
+}
+
+.pad-bottom {
+  --outer: #FF8E24;
+  --inner: #FFBE82;
+  left: 68px;
+  top: 521px;
+}
+
+.pad:hover {
+  filter: brightness(0.88);
+}
+
+.pad:active {
+  transform: scale(0.95);
+}
+
+.pad:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
